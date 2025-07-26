@@ -17,13 +17,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Data Functions ---
     const fetchHabits = async () => {
-        const { data, error } = await supabase.from('habits').select('*').order('created_at');
+        const { data, error } = await supabaseClient.from('habits').select('*').order('created_at');
         if (error) console.error('Error fetching habits:', error);
         else renderHabits(data);
     };
 
     const addHabit = async (title, color) => {
-        const { error } = await supabase.from('habits').insert([{ title, color }]);
+        const { error } = await supabaseClient.from('habits').insert([{ title, color }]);
         if (error) console.error('Error adding habit:', error);
         else {
             fetchHabits();
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ? completedDates.filter(date => date !== today)
             : [...completedDates, today];
 
-        const { error } = await supabase
+        const { error } = await supabaseClient
             .from('habits')
             .update({ completed_dates: updatedDates })
             .eq('id', habit.id);

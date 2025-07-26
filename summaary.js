@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const fetchHabitDetails = async () => {
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from('habits')
             .select('*')
             .eq('id', habitId)
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const deleteHabit = async () => {
         const isConfirmed = confirm('Are you sure you want to delete this habit? This cannot be undone.');
         if (isConfirmed) {
-            const { error } = await supabase
+            const { error } = await supabaseClient
                 .from('habits')
                 .delete()
                 .eq('id', habitId);
